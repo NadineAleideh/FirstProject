@@ -1,4 +1,5 @@
 ﻿using FirstProject.BL.Service;
+using FirstProject.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,9 @@ namespace FirstProject.Controllers
         {
             _departmentService = departmentService;
         }
+
+        //[TypeFilter(typeof(TestResourceFilterAttribute))]
+        [TypeFilter(typeof(TestActionFitlerAttribute))]
 
         [HttpGet]
         [Route("{id}")]

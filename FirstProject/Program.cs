@@ -1,5 +1,6 @@
 using FirstProject.BL;
 using FirstProject.DAL;
+using FirstProject.MiddelWare;
 namespace FirstProject
 {
     public class Program
@@ -32,12 +33,31 @@ namespace FirstProject
 
             app.UseHttpsRedirection();
 
+            //////////MiddleWare///////////////////
+
+            app.Use(async (next, context) =>
+            {
+                Console.Write("inline middelware bfore 1");
+                //logic before
+                await context.Invoke(next);
+
+                //logic after
+                Console.Write("inline middelware after 1");
+
+            });
+
+            //////////another MiddleWare///////////////////
+            app.UseMiddleware<TestMiddelware>();
+
+
             app.UseAuthorization();
 
-
+            //mvc middelware
             app.MapControllers();
 
             app.Run();
+
+            //during middelware the httpcontext body still json not c# object  [modelbinding]
         }
     }
 }
